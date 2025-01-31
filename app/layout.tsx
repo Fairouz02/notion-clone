@@ -1,10 +1,12 @@
-import type { Metadata } from "next";
+import { Toaster } from "sonner";
 import { Inter } from "next/font/google";
-import "./globals.css";
+import type { Metadata } from "next";
+
 import { ThemeProvider } from "@/components/providers/theme-providers";
 import { ConvexClientProvider } from "@/components/providers/convex-provider";
-import { Toaster } from "sonner";
+import { ModalProvider } from "@/components/providers/modal-providers";
 
+import "./globals.css";
 const inter = Inter({ subsets: ['latin']})
 
 export const metadata: Metadata = {
@@ -35,6 +37,7 @@ export default function RootLayout({
         <ConvexClientProvider>
           <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange storageKey="jotion-theme-2">
           <Toaster position ="bottom-center"/>
+          <ModalProvider />
           {children}
           </ThemeProvider>
         </ConvexClientProvider>
