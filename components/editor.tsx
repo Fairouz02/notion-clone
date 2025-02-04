@@ -1,9 +1,9 @@
 "use client"
 
 import { useTheme } from "next-themes";
-import { BlockNoteEditor, PartialBlock } from "@blocknote/core";
-import { useCreateBlockNote } from "@blocknote/react";
-import { BlockNoteView } from "@blocknote/mantine"; 
+import { BlockNoteEditor, PartialBlock } from "@blocknote/core"; //version 0.9.4
+import { BlockNoteView, useBlockNote } from "@blocknote/react";
+// import { BlockNoteView } from "@blocknote/mantine"; 
 import "@blocknote/core/style.css";
 
 interface EditorProps {
@@ -18,12 +18,13 @@ export const Editor = ({
     editable
 }: EditorProps ) => {
     const resolvedTheme = useTheme();
-    const EditorChanged = async () => {
-        return JSON.stringify(editor.topLevelBlocks, null, 2)
-    }
     
-    const editor = useCreateBlockNote({
-        initialContent: initialContent ? JSON.parse(initialContent) : undefined
+    const editor: BlockNoteEditor = useBlockNote({
+        editable,
+        initialContent: initialContent ? JSON.parse(initialContent) as PartialBlock[] : undefined,
+        onEditorContentChange: (editor) => {
+            onChange(JSON.stringify(editor.topLevelBlocks, null, 2))
+        },
         
         // ,
         // onEditorContentChange: (editor) => {
